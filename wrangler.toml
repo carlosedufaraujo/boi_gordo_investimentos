@@ -5,7 +5,7 @@ compatibility_date = "2023-12-01"
 [[d1_databases]]
 binding = "DB"
 database_name = "boi_gordo_db"
-database_id = "PREENCHER_COM_SEU_DATABASE_ID"
+database_id = "1e4600f3-bc24-431f-9362-ac2d6f7c0627"
 
 [site]
 bucket = "./public"

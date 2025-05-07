@@ -1,16 +1,5 @@
-{
-  "name": "boi-gordo-investimentos",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "dev": "wrangler dev",
-    "deploy": "wrangler deploy"
-  },
-  "dependencies": {
-    "chart.js": "^4.4.0",
-    "itty-router": "^4.0.23"
-  },
-  "devDependencies": {
-    "wrangler": "^3.22.0"
-  }
+"devDependencies": {
+  "@cloudflare/workers-types": "^4.20240415.0",
+  "typescript": "^5.5.0",
+  "wrangler": "^3.22.0"
 }

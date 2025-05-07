@@ -1303,4 +1303,3 @@ styleSheet.innerText = `
 .notification-error { background-color: #e74c3c; }
 `;
 document.head.appendChild(styleSheet);
-

@@ -483,4 +483,3 @@ function atualizarGraficoExposicaoReferencia(posicoesAbertasData) {
 // document.addEventListener('DOMContentLoaded', function() {
 //   inicializarGraficos();
 // });
-

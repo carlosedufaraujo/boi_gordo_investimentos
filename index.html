@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boi Gordo Investimentos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Boi Gordo</span>
+                    <span>Investimentos</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active" data-section="dashboard">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="transacoes">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>Transações</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="posicoes-abertas">
+                            <i class="fas fa-unlock"></i>
+                            <span>Posições Abertas</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="posicoes-liquidadas">
+                            <i class="fas fa-lock"></i>
+                            <span>Posições Liquidadas</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="configuracoes">
+                            <i class="fas fa-cog"></i>
+                            <span>Configurações</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="version">Versão 2.2</div>
+                <button class="btn-tema">
+                    <i class="fas fa-moon"></i>
+                    <span>Tema Escuro</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Conteúdo principal -->
+        <div class="main-content">
+            <!-- Dashboard -->
+            <section id="dashboard" class="content-section active">
+                <div class="section-header">
+                    <h1 class="section-title">Dashboard</h1>
+                    <div class="section-actions">
+                        <button id="btn-atualizar" class="btn btn-secondary">
+                            <i class="fas fa-sync-alt"></i> Atualizar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Cards de métricas -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-title">Resultado Acumulado</div>
+                        <div id="resultado-acumulado" class="metric-value">R$ 0,00</div>
+                        <div id="resultado-trend-acumulado" class="metric-trend trend-neutral">0%</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Contratos Liquidados</div>
+                        <div id="contratos-liquidados" class="metric-value">0</div>
+                        <div id="contratos-trend-liquidados" class="metric-trend trend-neutral">0</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Taxa de Acerto</div>
+                        <div id="taxa-acerto" class="metric-value">0,00%</div>
+                        <div id="taxa-trend-acerto" class="metric-trend trend-neutral">0%</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Fator de Lucro</div>
+                        <div id="fator-lucro" class="metric-value">0,00</div>
+                        <div id="fator-trend-lucro" class="metric-trend trend-neutral">0,00</div>
+                    </div>
+                </div>
+
+                <!-- Posições Liquidadas -->
+                <div class="dashboard-section">
+                    <h2 class="dashboard-section-title">
+                        <i class="fas fa-lock"></i> Posições Liquidadas
+                    </h2>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Referência</th>
+                                    <th>Estratégia</th>
+                                    <th>Contratos</th>
+                                    <th>Preço Entrada</th>
+                                    <th>Preço Saída</th>
+                                    <th>Resultado</th>
+                                    <th>Dias</th>
+                                    <th>Data</th>
+                                </tr>
+                            </thead>
+                            <tbody id="posicoes-liquidadas-table">
+                                <tr>
+                                    <td colspan="8" class="text-center">Nenhuma posição liquidada</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Posições Abertas -->
+                <div class="dashboard-section">
+                    <h2 class="dashboard-section-title">
+                        <i class="fas fa-unlock"></i> Posições Abertas
+                    </h2>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Referência</th>
+                                    <th>Tipo</th>
+                                    <th>Contratos</th>
+                                    <th>Preço Médio</th>
+                                    <th>Preço Atual</th>
+                                    <th>Resultado</th>
+                                    <th>Dias</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="posicoes-abertas-table">
+                                <tr>
+                                    <td colspan="8" class="text-center">Nenhuma posição aberta</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Gráficos -->
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3 class="chart-title">Resultado por Referência</h3>
+                        <div class="chart-container">
+                            <canvas id="chart-resultado-referencia"></canvas>
+                            <div class="no-data-message">Sem dados disponíveis</div>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3 class="chart-title">Distribuição por Referência</h3>
+                        <div class="chart-container">
+                            <canvas id="chart-distribuicao-referencia"></canvas>
+                            <div class="no-data-message">Sem dados disponíveis</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Transações -->
+            <section id="transacoes" class="content-section">
+                <div class="section-header">
+                    <h1 class="section-title">Transações</h1>
+                    <div class="section-actions">
+                        <button id="btn-nova-transacao" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Nova Transação
+                        </button>
+                        <button id="btn-importar-excel" class="btn btn-secondary">
+                            <i class="fas fa-file-import"></i> Importar Excel
+                        </button>
+                        <input type="file" id="input-importar-excel" accept=".xlsx,.xls" style="display: none;">
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Referência</th>
+                                <th>Tipo</th>
+                                <th>Contratos</th>
+                                <th>Preço</th>
+                                <th>Valor Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transacoes-table">
+                            <tr>
+                                <td colspan="6" class="text-center">Nenhuma transação registrada</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Posições Abertas -->
+            <section id="posicoes-abertas" class="content-section">
+                <div class="section-header">
+                    <h1 class="section-title">Posições Abertas</h1>
+                </div>
+
+                <div class="dashboard-section">
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Referência</th>
+                                    <th>Tipo</th>
+                                    <th>Contratos</th>
+                                    <th>Preço Médio</th>
+                                    <th>Preço Atual</th>
+                                    <th>Resultado</th>
+                                    <th>Dias</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="posicoes-abertas-full-table">
+                                <tr>
+                                    <td colspan="8" class="text-center">Nenhuma posição aberta</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Simulador -->
+                <div class="simulator-container">
+                    <h2 class="simulator-title">Simulador de Preço</h2>
+                    <div class="simulator-content">
+                        <div class="simulator-controls">
+                            <div class="form-group">
+                                <label for="simulador-referencia">Referência:</label>
+                                <select id="simulador-referencia" class="form-control">
+                                    <option value="Todos os Contratos">Todos os Contratos</option>
+                                    <!-- Opções serão adicionadas via JavaScript -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="simulador-preco">Preço Simulado:</label>
+                                <input type="number" id="simulador-preco" class="form-control" step="0.01" min="0" value="0">
+                            </div>
+                            <button id="btn-simular" class="btn btn-primary">Simular</button>
+                        </div>
+                        <div class="simulator-result">
+                            <h4>Resultado Simulado</h4>
+                            <div id="resultado-simulado" class="simulator-value">R$ 0,00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gráficos -->
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3 class="chart-title">Exposição por Referência</h3>
+                        <div class="chart-container">
+                            <canvas id="chart-exposicao-referencia"></canvas>
+                            <div class="no-data-message">Sem dados disponíveis</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Posições Liquidadas -->
+            <section id="posicoes-liquidadas" class="content-section">
+                <div class="section-header">
+                    <h1 class="section-title">Posições Liquidadas</h1>
+                </div>
+
+                <!-- Métricas -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-title">Resultado por Contrato</div>
+                        <div id="resultado-por-contrato" class="metric-value">R$ 0,00</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Spread Médio</div>
+                        <div id="spread-medio" class="metric-value">R$ 0,00</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Maior Ganho</div>
+                        <div id="maior-ganho" class="metric-value positive">R$ 0,00</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Maior Perda</div>
+                        <div id="maior-perda" class="metric-value negative">R$ 0,00</div>
+                    </div>
+                </div>
+
+                <div class="dashboard-section">
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Referência</th>
+                                    <th>Tipo</th>
+                                    <th>Contratos</th>
+                                    <th>Preço Entrada</th>
+                                    <th>Preço Saída</th>
+                                    <th>Resultado</th>
+                                    <th>Dias</th>
+                                    <th>Data</th>
+                                </tr>
+                            </thead>
+                            <tbody id="posicoes-liquidadas-full-table">
+                                <tr>
+                                    <td colspan="8" class="text-center">Nenhuma posição liquidada</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Gráficos -->
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3 class="chart-title">Liquidações por Estratégia</h3>
+                        <div class="chart-container">
+                            <canvas id="chart-liquidacoes-estrategia"></canvas>
+                            <div class="no-data-message">Sem dados disponíveis</div>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3 class="chart-title">Volume de Transações</h3>
+                        <div class="chart-container">
+                            <canvas id="chart-volume-transacoes"></canvas>
+                            <div class="no-data-message">Sem dados disponíveis</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Configurações -->
+            <section id="configuracoes" class="content-section">
+                <div class="section-header">
+                    <h1 class="section-title">Configurações</h1>
+                </div>
+
+                <div class="config-container">
+                    <h2 class="config-title">Preços Atuais</h2>
+                    <div class="config-form">
+                        <div id="precos-container" class="form-row">
+                            <!-- Campos de preço serão adicionados via JavaScript -->
+                        </div>
+                    </div>
+                    <div class="config-actions">
+                        <button id="btn-atualizar-precos" class="btn btn-primary">Atualizar Preços</button>
+                    </div>
+                </div>
+
+                <div class="config-container">
+                    <h2 class="config-title">Gerenciamento de Dados</h2>
+                    <div class="config-actions">
+                        <button id="btn-exportar" class="btn btn-secondary">
+                            <i class="fas fa-download"></i> Exportar Dados
+                        </button>
+                        <button id="btn-importar" class="btn btn-secondary">
+                            <i class="fas fa-upload"></i> Importar Dados
+                        </button>
+                        <button id="btn-resetar" class="btn btn-danger">
+                            <i class="fas fa-trash-alt"></i> Resetar Dados
+                        </button>
+                    </div>
+                </div>
+
+                <div class="config-container">
+                    <h2 class="config-title">Armazenamento na Nuvem</h2>
+                    <p>Status da conexão: <span id="status-conexao">Verificando...</span></p>
+                    <div class="config-actions">
+                        <button id="btn-verificar-conexao" class="btn btn-secondary">
+                            <i class="fas fa-sync-alt"></i> Verificar Conexão
+                        </button>
+                        <button id="btn-migrar-dados" class="btn btn-primary">
+                            <i class="fas fa-cloud-upload-alt"></i> Migrar Dados para Nuvem
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Botão de menu para mobile -->
+    <button class="menu-toggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Modal de Nova Transação -->
+    <div id="modal-nova-transacao" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Nova Transação</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="form-nova-transacao">
+                    <div class="form-group">
+                        <label for="transacao-data">Data:</label>
+                        <input type="date" id="transacao-data" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="transacao-referencia">Referência:</label>
+                        <select id="transacao-referencia" class="form-control" required>
+                            <!-- Opções serão adicionadas via JavaScript -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="transacao-tipo">Tipo:</label>
+                        <select id="transacao-tipo" class="form-control" required>
+                            <option value="Compra">Compra</option>
+                            <option value="Venda">Venda</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="transacao-contratos">Contratos:</label>
+                        <input type="number" id="transacao-contratos" class="form-control" min="1" step="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="transacao-preco">Preço:</label>
+                        <input type="number" id="transacao-preco" class="form-control" min="0" step="0.01" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary modal-close">Cancelar</button>
+                <button id="btn-salvar-transacao" class="btn btn-primary">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Liquidação -->
+    <div id="modal-liquidacao" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Liquidar Posição</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="form-liquidacao">
+                    <input type="hidden" id="liquidacao-referencia">
+                    <div class="form-group">
+                        <label for="liquidacao-info">Posição:</label>
+                        <div id="liquidacao-info" class="form-static"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="liquidacao-contratos">Contratos a Liquidar:</label>
+                        <input type="number" id="liquidacao-contratos" class="form-control" min="1" step="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="liquidacao-preco">Preço de Liquidação:</label>
+                        <input type="number" id="liquidacao-preco" class="form-control" min="0" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="liquidacao-resultado">Resultado Estimado:</label>
+                        <div id="liquidacao-resultado" class="form-static">R$ 0,00</div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary modal-close">Cancelar</button>
+                <button id="btn-confirmar-liquidacao" class="btn btn-primary">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Importação -->
+    <div id="modal-importacao" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Importar Dados</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="importacao-dados">Cole os dados JSON aqui:</label>
+                    <textarea id="importacao-dados" class="form-control" rows="10"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary modal-close">Cancelar</button>
+                <button id="btn-confirmar-importacao" class="btn btn-primary">Importar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data_api.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

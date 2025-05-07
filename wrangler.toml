@@ -1,0 +1,11 @@
+name = "boi-gordo-investimentos"
+main = "src/index.js"
+compatibility_date = "2023-12-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "boi_gordo_db"
+database_id = "PREENCHER_COM_SEU_DATABASE_ID"
+
+[site]
+bucket = "./public"
